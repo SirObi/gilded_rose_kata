@@ -44,9 +44,9 @@ class StandardQualityUpdater
 
   def update_quality(item)
     if item.best_before_days_left <= 0
-      adjust_quality(item, -2)
+      increase_decrease_or_set_quality(item, -2)
     else
-      adjust_quality(item, -1)
+      increase_decrease_or_set_quality(item, -1)
     end
   end
 
@@ -54,7 +54,7 @@ class StandardQualityUpdater
     item.best_before_days_left -= 1
   end
 
-  def adjust_quality(item, amount)
+  def increase_decrease_or_set_quality(item, amount)
     item.quality += amount
     item.quality = 50 if item.quality > 50
     item.quality = 0 if item.quality < 0
@@ -64,9 +64,9 @@ end
 class BrieQualityUpdater < StandardQualityUpdater
   def update_quality(item)
     if item.best_before_days_left <= 0
-      adjust_quality(item, 2)
+      increase_decrease_or_set_quality(item, 2)
     else
-      adjust_quality(item, 1)
+      increase_decrease_or_set_quality(item, 1)
     end
   end
 end
@@ -74,11 +74,11 @@ end
 class BackstagePassQualityUpdater < StandardQualityUpdater
   def update_quality(item)
     if item.best_before_days_left > 10
-      adjust_quality(item, 1)
+      increase_decrease_or_set_quality(item, 1)
     elsif item.best_before_days_left > 5
-      adjust_quality(item, 2)
+      increase_decrease_or_set_quality(item, 2)
     elsif item.best_before_days_left > 0
-      adjust_quality(item, 3)
+      increase_decrease_or_set_quality(item, 3)
     else
       item.quality = 0
     end
@@ -88,9 +88,9 @@ end
 class ConjuredItemQualityUpdater < StandardQualityUpdater
   def update_quality(item)
     if item.sell_in <= 0
-      adjust_quality(item, -4)
+      increase_decrease_or_set_quality(item, -4)
     else
-      adjust_quality(item, -2)
+      increase_decrease_or_set_quality(item, -2)
     end
   end
 end
